@@ -1,4 +1,4 @@
-name: Build MojRitam v0.5.1 APK
+name: Build MojRitam v0.5.2 APK
 
 on:
   workflow_dispatch:
@@ -14,17 +14,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Unpack MojRitam v0.5.1
+      - name: Unpack MojRitam v0.5.2
         run: |
-          rm -rf MojRitam_v0.5.1_BUILD_FIX
-          unzip -o MojRitam_v0.5.1_BUILD_FIX_source.zip
+          rm -rf MojRitam_v0.5.2_VISUAL_PASS
+          unzip -o MojRitam_v0.5.2_VISUAL_PASS_source.zip
 
           echo "=== CONTENT ==="
-          ls -la MojRitam_v0.5.1_BUILD_FIX
+          ls -la MojRitam_v0.5.2_VISUAL_PASS
 
-          test -f MojRitam_v0.5.1_BUILD_FIX/BUILD_FIX_v051.txt
-
-          echo "V0.5.1 SOURCE VERIFIED"
+          test -f MojRitam_v0.5.2_VISUAL_PASS/BUILD_VISUAL_v052.txt
+          echo "V0.5.2 SOURCE VERIFIED"
 
       - name: Set up JDK 17
         uses: actions/setup-java@v5
@@ -59,14 +58,14 @@ jobs:
           echo "ANDROID_HOME=/usr/local/lib/android/sdk" >> "$GITHUB_ENV"
           echo "ANDROID_SDK_ROOT=/usr/local/lib/android/sdk" >> "$GITHUB_ENV"
 
-      - name: Build MojRitam v0.5.1
-        working-directory: MojRitam_v0.5.1_BUILD_FIX
+      - name: Build MojRitam v0.5.2
+        working-directory: MojRitam_v0.5.2_VISUAL_PASS
         run: |
           gradle --no-daemon clean assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: MojRitam-v0.5.1-debug-apk
-          path: MojRitam_v0.5.1_BUILD_FIX/app/build/outputs/apk/debug/app-debug.apk
+          name: MojRitam-v0.5.2-debug-apk
+          path: MojRitam_v0.5.2_VISUAL_PASS/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
